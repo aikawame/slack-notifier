@@ -2,6 +2,8 @@ FROM node:18-alpine
 
 WORKDIR /opt/project
 
-RUN npm install -g serverless
+COPY package.json package-lock.json ./
 
-ENTRYPOINT ["/bin/sh", "-c", "while :; do sleep 10; done"]
+RUN npm install -g serverless && npm install
+
+ENTRYPOINT ["sls", "offline", "--host", "0.0.0.0"]
